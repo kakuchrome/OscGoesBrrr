@@ -1,4 +1,4 @@
-import { dialog, app } from 'electron';
+import { dialog, app, ipcMain } from 'electron';
 import fs from 'fs/promises';
 import path from "path";
 import { createWriteStream, existsSync } from "fs";
@@ -19,6 +19,8 @@ const UpdatesJsonSchema = t.type({
 });
 
 export default class Updater {
+    constructor(private configMap: Map<string, string>, private savePath: string) {}
+
     async checkAndNotify(notifyOnFailure = false) {
         try {
             await this.checkAndNotifyUnsafe();
@@ -30,6 +32,14 @@ export default class Updater {
         }
     }
     async checkAndNotifyUnsafe() {
+        if (this.configMap.get('disableUpdates') === 'true') {
+            console.log("Update check disabled by config.");
+            return;
+        }
+        if (process.env['disableUpdateCheck']) {
+            console.log("Update check disabled by build configuration.");
+            return;
+        }
         if (process.platform !== 'win32') {
             console.log("Not checking for updates, not on windows");
             return;
@@ -56,9 +66,17 @@ export default class Updater {
         const resp = await dialog.showMessageBox({
             title: 'Update',
             message: `Version ${updates.latestVersion} is available`,
-            buttons: ['Install', 'Skip'],
+            buttons: ['Install', 'Skip', 'Disable Updates'],
             cancelId: 1
         });
+        if (resp.response === 2) {
+            // Disable Updates
+            const newConfigText = 'disableUpdates=true\n' + readFileSync(this.savePath, {encoding: 'utf-8'});
+            await fs.mkdir(path.dirname(this.savePath), {recursive: true});
+            await fs.writeFile(this.savePath, newConfigText);
+            this.configMap.set('disableUpdates', 'true');
+            return;
+        }
         if (resp.response !== 0) return;
 
         console.log("Downloading update ...");

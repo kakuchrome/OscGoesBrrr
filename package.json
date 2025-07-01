@@ -9,7 +9,8 @@
     "watchFrontend": "cd src/frontend && webpack --watch",
     "watchMain": "cd src/main && webpack --watch",
     "build": "cd src/main && webpack && cd ../frontend && webpack",
-    "rebuild": "npm run build && npm run start"
+    "rebuild": "npm run build && npm run start",
+    "dist": "electron-builder --win nsis"
   },
   "repository": "https://github.com/OscToys/OscGoesBrrr",
   "license": "CC BY-NC-SA 4.0",
@@ -75,7 +76,10 @@
     },
     "files": [
       "app/**/*"
-    ]
+    ],
+    "extraMetadata": {
+      "disableUpdateCheck": true
+    }
   },
   "optionalDependencies": {
     "native-reg": "^1.1.1"

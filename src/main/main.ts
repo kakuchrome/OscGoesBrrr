@@ -36,12 +36,12 @@ try {
     app.exit();
   }
 
-  const updater = new Updater();
-  updater.checkAndNotify();
-
   const savePath = path.join(app.getPath('appData'), 'OscGoesBrrr', 'config.txt');
   const configMap = new OgbConfigService();
   let configTxt = '';
+
+  const updater = new Updater(configMap, savePath);
+  updater.checkAndNotify();
 
   let butt: Buttplug | undefined;
 
