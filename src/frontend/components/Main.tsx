@@ -10,8 +10,9 @@ import DebugLog from "./DebugLog";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faDiscord } from "@fortawesome/free-brands-svg-icons";
 import {IconDefinition} from "@fortawesome/fontawesome-common-types";
-import {faBarsStaggered, faCircleNodes, faHome, faPeopleGroup, faTerminal} from "@fortawesome/free-solid-svg-icons";
+import {faBarsStaggered, faCircleNodes, faGear, faHome, faPeopleGroup, faTerminal} from "@fortawesome/free-solid-svg-icons";
 import AvatarParams from "./AvatarParams";
+import DeviceConfig from "./DeviceConfig";
 
 export default function Main() {
     const [page,setPage] = useState<string>("home");
@@ -29,6 +30,7 @@ export default function Main() {
         <div className="leftColumn">
             <img src={logoPath}/>
             {SelectButton("home", "Home", faHome)}
+            {SelectButton("deviceConfig", "Device Config", faGear)}
             {SelectButton("logs", "Debug Logs", faTerminal)}
             {SelectButton("avatarParams", "Avatar Debugger", faBarsStaggered)}
             {SelectButton("discord", "Support Discord", faDiscord, () => window.open("https://osc.toys/discord", "_blank"))}
@@ -37,6 +39,7 @@ export default function Main() {
 
         <div className="rightColumn">
             {page == "home" && <Home/>}
+            {page == "deviceConfig" && <DeviceConfig />}
             {page == "logs" && <DebugLog/>}
             {page == "avatarParams" && <AvatarParams/>}
         </div>

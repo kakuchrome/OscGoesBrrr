@@ -16,10 +16,6 @@ export default function Home() {
                 <li>Your partner's avatar should be upgraded using the same tool.</li>
                 <li>If their avatar is not upgraded, you can still interact with their Hands, Feet, Head, or
                     stock Poi 8.1 TPS penetrators (limited).</li>
-                <li>To enable interaction between a penetrator and orifice both on your own avatar,
-                    add <i>all.penSelf=1</i> in the Settings box.</li>
-                <li>To enable touching your own penetrator with your own hands,
-                    add <i>all.touchSelf=1</i> in the Settings box.</li>
             </ul>
         </div>
 
@@ -31,10 +27,6 @@ export default function Home() {
             <div style={{display: 'flex', flexDirection: 'column', flex: 1, margin: '5px', textAlign: 'center'}}>
                 <h3>VRChat Status</h3>
                 <StatusBox style={{flex: 1}} getCmd="oscStatus:get" />
-            </div>
-            <div style={{display: 'flex', flexDirection: 'column', flex: 1, margin: '5px', textAlign: 'center'}}>
-                <h3>Settings <a href="https://osc.toys/settings" target="_blank">(?)</a></h3>
-                <AdvancedConfig/>
             </div>
         </div>
     </div>;

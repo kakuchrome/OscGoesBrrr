@@ -15,7 +15,7 @@ export default {
         rules: [
             {
                 test: /\.tsx?$/,
-                use: [{loader: 'ts-loader', options: {onlyCompileBundledFiles: true}}],
+                use: [{loader: 'ts-loader', options: {transpileOnly: true}}],
                 exclude: /node_modules/,
             },
             {

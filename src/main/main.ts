@@ -264,6 +264,15 @@ try {
     return configTxt;
   });
 
+  ipcMain.handle('devices:get', async (_event) => {
+    if (!butt) return [];
+    return Array.from(bridge.getToys()).map(toy => ({
+      id: toy.bioFeature.id,
+      type: toy.bioFeature.type,
+      deviceId: toy.bioFeature.deviceId,
+    }));
+  });
+
   ipcMain.handle('fft:status', (_event, level) => {
     if (typeof level != 'number') return;
     if (level < 0 || level > 1 || isNaN(level)) return;
